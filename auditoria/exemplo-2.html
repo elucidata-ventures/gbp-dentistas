@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Exemplo de auditoria do perfil no Google — Clínica Exemplo</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 0; background: #f4f5f2;
+         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+                      Helvetica, Arial, sans-serif;
+         color: #22302c; line-height: 1.55; }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 24px 16px 48px; }
+  .card { background: #fff; border: 1px solid #e3e6e0; border-radius: 12px;
+          padding: 24px 20px; margin-bottom: 16px; }
+  h1 { font-size: 1.35rem; margin: 0 0 4px; }
+  h2 { font-size: 1.05rem; margin: 0 0 12px; color: #22302c; }
+  p  { margin: 0 0 12px; }
+  .meta { color: #5c6b64; font-size: .85rem; margin-bottom: 20px; }
+  .score-row { display: flex; align-items: baseline; gap: 12px;
+               flex-wrap: wrap; margin-bottom: 8px; }
+  .score { font-size: 2.6rem; font-weight: 700; }
+  .score small { font-size: 1rem; font-weight: 400; color: #5c6b64; }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 999px;
+           font-size: .8rem; font-weight: 600; color: #fff; }
+  .bar { height: 8px; background: #e9ece6; border-radius: 999px;
+         overflow: hidden; margin: 8px 0 16px; }
+  .bar span { display: block; height: 100%; border-radius: 999px; }
+  table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+  th, td { text-align: left; padding: 8px 6px;
+           border-bottom: 1px solid #edefe9; vertical-align: top; }
+  th { color: #5c6b64; font-weight: 600; font-size: .8rem;
+       text-transform: uppercase; letter-spacing: .03em; }
+  td.num, th.num { text-align: right; white-space: nowrap; }
+  tr.voce td { font-weight: 700; background: #f6f8f4; }
+  .fix { border-left: 3px solid #1a7f4e; padding: 2px 0 2px 14px;
+         margin: 0 0 16px; }
+  .fix h3 { margin: 0 0 4px; font-size: .98rem; }
+  .fix p { margin: 0; color: #44524c; font-size: .92rem; }
+  .rubrica td:first-child { color: #44524c; }
+  .cta { background: #22302c; color: #f4f5f2; border-radius: 12px;
+         padding: 24px 20px; }
+  .cta h2 { color: #fff; }
+  .cta p { color: #cdd6d0; }
+  .cta .preco { color: #fff; font-weight: 700; }
+  footer { color: #8a978f; font-size: .78rem; text-align: center;
+           margin-top: 24px; }
+  @media (max-width: 480px) {
+    .wrap { padding: 16px 10px 40px; }
+    .card, .cta { padding: 18px 14px; }
+    .score { font-size: 2.1rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div style="background:#fdf6e8;border:1px solid #e8d5a8;border-radius:12px;
+              padding:14px 16px;margin-bottom:16px;font-size:.92rem;color:#6b5320">
+    <strong>Exemplo de demonstração.</strong> Esta é uma auditoria de amostra, com
+    consultório e números fictícios, só para você ver o formato do relatório.
+    A auditoria do seu consultório é feita com os dados públicos reais do seu
+    perfil no Google. <a href="../" style="color:#6b5320">Voltar para a página do serviço</a>.
+  </div>
+
+  <div class="card">
+    <h1>Auditoria do seu perfil no Google</h1>
+    <p class="meta">Clínica Exemplo · Marília · 29/07/2026</p>
+    <div class="score-row">
+      <span class="score" style="color:#c25400">51<small> / 100</small></span>
+      <span class="badge" style="background:#c25400">perfil fraco</span>
+    </div>
+    <div class="bar"><span style="width:51%;background:#c25400"></span></div>
+    <p>Analisamos o que um paciente vê quando pesquisa por dentista na sua
+    região. A nota acima resume cinco fatores públicos do seu perfil no
+    Google — o detalhamento completo está no fim desta página.</p>
+  </div>
+
+  <div class="card">
+    <h2>Como você aparece ao lado dos vizinhos em Marília</h2>
+    <p style="font-size:.9rem;color:#5c6b64">Dados públicos do Google Maps.
+    Quem tem mais avaliações e perfil completo tende a aparecer primeiro
+    quando o paciente pesquisa &ldquo;dentista em Marília&rdquo;.</p>
+    <table>
+      <tr><th>Consultório</th><th class="num">Nota</th>
+          <th class="num">Avaliações</th><th class="num">Site</th></tr>
+      <tr><td>Consultório vizinho 1</td><td class='num'>4.8</td><td class='num'>124</td><td class='num'>sim</td></tr>
+<tr><td>Consultório vizinho 2</td><td class='num'>4.6</td><td class='num'>57</td><td class='num'>sim</td></tr>
+<tr><td>Consultório vizinho 3</td><td class='num'>4.9</td><td class='num'>31</td><td class='num'>não</td></tr>
+<tr class="voce"><td>Clínica Exemplo (você)</td><td class='num'>3.8</td><td class='num'>15</td><td class='num'>não</td></tr>
+
+    </table>
+  </div>
+  <div class="card">
+    <h2>As 3 correções de maior impacto para o seu perfil</h2>
+    <div class='fix'><h3>1. Campanha de avaliações com pacientes atuais</h3><p>Seu perfil tem 15 avaliações — é o principal fator de posicionamento local. Os concorrentes ao lado têm em média 70 avaliações — é para eles que o Google manda o paciente que pesquisa “dentista em Marília”. Um fluxo simples de pedido de avaliação pós-consulta (link direto por WhatsApp) costuma dobrar o volume em 60–90 dias.</p></div>
+<div class='fix'><h3>2. Adicionar um link de destino no perfil</h3><p>Seu perfil não tem site nem link de agendamento. Perfis sem link perdem o clique de quem já decidiu marcar — o paciente cai no concorrente que tem botão de contato. Uma página simples de agendamento já resolve.</p></div>
+<div class='fix'><h3>3. Responder todas as avaliações (inclusive as negativas)</h3><p>Sua nota média é 3.8. Respostas do proprietário são lidas por quem está escolhendo dentista e sinalizam ao Google que o perfil é ativo. Responder as negativas com profissionalismo recupera parte da confiança perdida.</p></div>
+
+  </div>
+
+  <div class="cta">
+    <h2>Se preferir, nós cuidamos disso por você</h2>
+    <p>Gestão completa do seu perfil no Google: otimização, posts semanais,
+    resposta a todas as avaliações e fotos atualizadas.
+    <span class="preco">R$&nbsp;247/mês, sem fidelidade.</span></p>
+    <p><strong style="color:#fff">1 paciente novo por mês já paga o serviço
+    — e um implante paga o ano.</strong></p>
+    <p>Para receber a proposta completa, é só responder o e-mail desta
+    auditoria pedindo a proposta, ou abrir a
+    <a href="../proposta/" style="color:#fff"><strong>página da proposta</strong></a>.</p>
+  </div>
+
+  <div class="card">
+    <h2>Como calculamos a sua nota</h2>
+    <table class="rubrica">
+      <tr><th>Fator</th><th class="num">Pontos</th></tr>
+      <tr><td>Avaliação média no Google<br><small style='color:#8a978f'>3.8 de 5.0</small></td><td class='num'>23 / 30</td></tr>
+<tr><td>Volume de avaliações<br><small style='color:#8a978f'>15 avaliações</small></td><td class='num'>18 / 30</td></tr>
+<tr><td>Site vinculado ao perfil<br><small style='color:#8a978f'>não encontrado</small></td><td class='num'>0 / 20</td></tr>
+<tr><td>Telefone publicado<br><small style='color:#8a978f'>sim</small></td><td class='num'>10 / 10</td></tr>
+<tr><td>Endereço completo<br><small style='color:#8a978f'>incompleto ou ausente</small></td><td class='num'>0 / 10</td></tr>
+
+      <tr><td><strong>Total</strong></td>
+          <td class="num"><strong>51 / 100</strong></td></tr>
+    </table>
+  </div>
+
+  <footer>Auditoria gerada a partir de dados públicos do Google Maps em
+  29/07/2026. Preparada especificamente para Clínica Exemplo.</footer>
+
+  <p style="text-align:center;font-size:.8rem;margin-top:10px">
+    <a href="../" style="color:#5c6b64">Gestão do perfil no Google para consultórios odontológicos — R$ 247/mês, sem fidelidade</a>
+  </p>
+</div>
+</body>
+</html>
