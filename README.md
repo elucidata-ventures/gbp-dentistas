@@ -63,29 +63,43 @@ preço na tela não conta para o gate.
 
 ## 2. Como publicar uma auditoria personalizada nova
 
-O gerador vive em `../assets/gerar_auditoria.py` (só stdlib). Ele escreve
-`<slug>.html` + `<slug>__email.txt`; o HTML vai para `auditoria/<slug>.html`,
-que já sai com `noindex,nofollow` e **não é linkado em lugar nenhum** — o link
-só existe no e-mail do prospect.
+O gerador vive em `../assets/gerar_auditoria.py` (só stdlib). As auditorias de
+**clínicas reais** ficam em `auditoria/r/<token>.html` — cada uma já sai com
+`noindex,nofollow` e **não é linkada em lugar nenhum**; o link só existe no
+e-mail do prospect.
 
-Comando de uma linha (a partir de `ventures/G001-04/landing/`), onde
-`../data/prospects.csv` pode ser um CSV com **um único prospect**:
+**Por que `<token>` e não `<nome-da-clinica>` (regra de 07/08/2026):** este
+repositório é PÚBLICO. Um diretório com 72 arquivos batizados com o nome de
+clínicas reais **é** uma lista pública de prospects — exatamente o que
+`auditoria/index.html` promete que não existe. O token é opaco e o mapa
+`token → clínica` mora em `../data/auditoria_links.csv`, **fora do repositório**.
+Nunca commite esse mapa aqui.
+
+Comando (a partir de `ventures/G001-04/`); a base pode ser um CSV com **um
+único prospect**, e o mesmo arquivo serve de lista de vizinhos:
 
 ```bash
-python3 ../assets/gerar_auditoria.py ../data/prospects.csv ../data/concorrentes.csv --out /tmp/aud && python3 -c "import glob,io,os,shutil;[ (lambda s,d: io.open(d,'w',encoding='utf-8').write(io.open(s,encoding='utf-8').read().replace('{{DOMINIO}}','elucidata-ventures.github.io/gbp-dentistas')))(f,'auditoria/'+os.path.basename(f)) for f in glob.glob('/tmp/aud/*.html')]" && git add auditoria && git commit -m "Auditorias novas" && git push
+python3 assets/gerar_auditoria.py data/enriquecimento_maps.csv data/enriquecimento_maps.csv \
+  --out landing/auditoria/r \
+  --emails data/auditoria_emails \
+  --tokens data/auditoria_links.csv \
+  --base-url https://elucidata-ventures.github.io/gbp-dentistas/auditoria/r
+cd landing && git add auditoria && git commit -m "Auditorias novas" && git push
 ```
 
-O que a linha faz: gera em `/tmp/aud`, copia os HTMLs para `auditoria/`
-substituindo o placeholder `{{DOMINIO}}` pela URL real do Pages, commita e
-publica. Os `__email.txt` ficam em `/tmp/aud` (não vão para o repo público).
+Tokens já existentes são **reaproveitados** (o link enviado a um prospect nunca
+muda ao regerar). Os `__email.txt` vão para `../data/auditoria_emails/` — script
+de abordagem não entra em repositório público.
 
-Link para colar no e-mail (`{{LINK_AUDITORIA}}`):
-`https://elucidata-ventures.github.io/gbp-dentistas/auditoria/<slug>.html`
-— o `<slug>` é `nome-do-consultorio-cidade` normalizado, e o gerador imprime
-cada slug na saída.
+Link para colar no e-mail (o gerador já resolve `{{LINK_AUDITORIA}}` quando
+recebe `--base-url`):
+`https://elucidata-ventures.github.io/gbp-dentistas/auditoria/r/<token>.html`
+
+Os três `auditoria/exemplo-*.html` continuam sendo os ÚNICOS com nome de
+arquivo legível — são fictícios, e é de propósito.
 
 O Pages leva ~1–3 min para refletir o push. Verificar:
-`curl -sI https://elucidata-ventures.github.io/gbp-dentistas/auditoria/<slug>.html`
+`curl -sI https://elucidata-ventures.github.io/gbp-dentistas/auditoria/r/<token>.html`
 até dar `HTTP/2 200`.
 
 ## 3. Regras que a página respeita (não quebrar)
