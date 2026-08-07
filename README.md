@@ -18,45 +18,48 @@ Zero dependência externa: HTML + CSS inline, sem CDN, sem fonte remota, sem JS
 de terceiros. Abre offline. `lang="pt-BR"`, meta description e Open Graph em
 `index.html`.
 
-## 1. Como ligar o CTA (1 linha por página)
+## 1. Como a captura funciona (RESOLVIDO — não há mais placeholder)
 
-Hoje o CTA está com placeholder porque o fundo ainda não tem e-mail nem
-Instagram da família GBP — pendências **P-011** (conta Instagram) e **P-018**
-(alias `familia-gbp@…` no Workspace). Nada de e-mail ou @ inventado na página.
+O CTA **não é mais** um `mailto:` com placeholder. Desde 07/08/2026 as três
+superfícies (`index.html`, `proposta/index.html` e cada auditoria gerada)
+carregam o mesmo **widget de intenção**, cuja fonte canônica única é
+`../assets/widget_intencao.html`. Não dependemos de P-011 (Instagram) nem de
+P-018 (alias de e-mail): o prospect digita o canal DELE em "onde te respondo".
 
-Quando a identidade existir, edite **estas linhas** (as ocorrências dentro do
-comentário `CTA_CANAL` no topo de cada arquivo são só documentação — pode
-deixar como estão):
+Cada clique manda o lead para **dois destinos**, de propósito:
 
-| Arquivo | Linha | Conteúdo hoje | Trocar por (exemplo com e-mail) |
+| # | Destino | Papel | Retenção |
 |---|---|---|---|
-| `index.html` | **301** | `<a class="botao" href="{{CTA_HREF}}">Quero a auditoria do meu perfil</a>` | `href="mailto:familia-gbp@elucidata.com.br?subject=Quero%20a%20auditoria%20do%20meu%20perfil"` |
-| `index.html` | **302** | `<p class="fallback">{{CTA_FALLBACK}}</p>` | `<p class="fallback">Ou escreva para familia-gbp@elucidata.com.br com o nome e a cidade do consultório.</p>` |
-| `proposta/index.html` | **154** | `<a class="botao" href="{{CTA_HREF}}">Aceitar a proposta — R$ 247/mês</a>` | `href="mailto:familia-gbp@elucidata.com.br?subject=Aceito%20a%20proposta%20de%20R%24247%2Fm%C3%AAs"` |
-| `proposta/index.html` | **155** | `<p class="alt">{{CTA_FALLBACK}}</p>` | `<p class="alt">Ou responda o e-mail da sua auditoria com “aceito, vamos começar”.</p>` |
+| 1 | `https://captura.elucidata.vc/v1/g001-04` (POST urlencoded) | **Fonte de verdade do gate.** É a resposta DELE que libera o "Recebido" na tela. | indefinida |
+| 2 | `https://ntfy.sh/elucidata-gbp-dentistas-k7m3q9x2` (POST JSON) | Sinal imediato. Fire-and-forget: falhar aqui é silencioso e não afeta o usuário. | **~12 h** |
+| 3 | `https://captura.elucidata.vc/f/g001-04` (link visível + `<noscript>`) | Escape sem JS / com bloqueador. Mesmos campos, mesmo destino. | indefinida |
 
-Se o canal for Instagram: `href="https://instagram.com/<handle>"` e fallback
-“Ou mande uma mensagem no direct do @&lt;handle&gt;.”.
-
-Comando de 1 linha para o caso e-mail (troca as 4 linhas de uma vez):
+Ler os leads (rodar de `ventures/G001-04/`):
 
 ```bash
-python3 - <<'PY'
-import io,glob
-EMAIL="familia-gbp@elucidata.com.br"   # <<< preencher
-for f in ["index.html","proposta/index.html"]:
-    t=io.open(f,encoding="utf-8").read()
-    t=t.replace('href="{{CTA_HREF}}"',
-        'href="mailto:%s?subject=Quero%%20a%%20auditoria%%20do%%20meu%%20perfil"'%EMAIL)
-    t=t.replace("{{CTA_FALLBACK}}",
-        "Ou escreva para %s com o nome e a cidade do consultório."%EMAIL)
-    io.open(f,"w",encoding="utf-8").write(t)
-PY
-git commit -am "Liga o CTA no canal da familia GBP" && git push
+python3 ../../ops/captura.py --novos    # só o que chegou desde a última leitura
+python3 ../../ops/captura.py --csv      # planilha
+python3 ../../ops/captura.py --apagar N # exclusão a pedido do titular (LGPD)
 ```
 
-Depois disso, repita a mesma edição em `../assets/proposta.html` (fonte da
-página de proposta) para as duas cópias não divergirem.
+Campos do formulário hospedado: `../assets/form_captura.json` (republicar com
+`python3 ../../ops/captura.py --publicar assets/form_captura.json`). Os rótulos
+de `interesse` no widget são **idênticos** às opções do formulário hospedado,
+para os dois caminhos caírem na mesma coluna:
+
+- `pedido_proposta` → "Quero a proposta completa"
+- `aceite_preco` → "Aceito os R$ 247/mês e quero começar"
+
+**Regra anti-autoengano (não remover):** `aceite_preco` só é enviado se a função
+`precoVisivel()` achar "R$ 247/mês" escrito no DOM da mesma tela. Aceite sem
+preço na tela não conta para o gate.
+
+**Nunca** escreva o token do endpoint em HTML, commit ou diário — o POST de lead
+é público por natureza e não usa token.
+
+> Nota: `../assets/proposta.html` continua sendo um template antigo com
+> `{{CTA_HREF}}`/`EMAIL_CONTATO` e **sem** widget. Ele não é publicado; a página
+> viva é `proposta/index.html`. Não use aquele arquivo como fonte.
 
 ## 2. Como publicar uma auditoria personalizada nova
 
